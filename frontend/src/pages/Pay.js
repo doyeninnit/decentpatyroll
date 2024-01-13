@@ -5,7 +5,7 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { red } from '@mui/material/colors';
 import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
-import { ethers, utils } from 'ethers';
+import { ethers, utils, wallet, getDefaultProvider, JsonRpcProvider } from 'ethers';
 import { Alchemy, Network } from "alchemy-sdk";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './constants';
 import '../styles/global.css';
@@ -19,15 +19,31 @@ function Pay() {
   const [balance, setBalance] = useState(0)
   const [sum, setSum] = useState(0)
   const [history, setHistory] = useState('')
+  const [signer, setSigner] = useState()
+  const [provider, setProvider] = useState()
+
 
   const connectWallet = async () => {
-    const addressArray = await window.ethereum.request({
-      method: "eth_requestAccounts"
-    });
-    const add = addressArray[0];
-    setAccount(
-      String(add).substring(0, 5) + "..." + String(add).substring(38)
-    );
+    // const addressArray = await window.ethereum.request({
+    //   method: "eth_requestAccounts"
+    // });
+    // const add = addressArray[0];
+    // setAccount(
+    //   String(add).substring(0, 5) + "..." + String(add).substring(38)
+    // );
+    // Replace with your private key
+    const mumbaiProviderUrl = 'https://polygon-mumbai.g.alchemy.com/v2/your-api-key';
+
+const privateKey = '41b6674049726684bd05f253e3029e2ad92a1d2c45028f4c59739df2f2e1cf18';
+
+// Create a Wallet and a provider
+const wallet = new ethers.Wallet(privateKey);
+const providerr = new ethers.providers.JsonRpcProvider(mumbaiProviderUrl);
+const signerr = wallet.connect(provider);
+setProvider(providerr)
+setSigner(signerr)
+setAccount(wallet.address)
+
   };
 
   const [employees, setEmployees] = useState([]);
@@ -45,7 +61,7 @@ console.log("bsd")
   }, [])
 
   const getEmployees = async () => {
-    const response = await fetch('http://localhost:8000/employees')
+    const response = await fetch('https://ubiquitous-trout-559jg4w44qv24wwr-8000.app.github.dev/employees')
     const people = await response.json()
     await setEmployees(people)
     // getTotal()
@@ -77,8 +93,8 @@ console.log("bsd")
       // onBulkSend()
       console.log("Starting the sendTo function...");
   
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+      // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const signer = provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
       
       console.log("Employee Addresses:", employeeAddressses);
@@ -117,8 +133,8 @@ console.log("bsd")
 
   //Get Smart Contract Balance
   const getBalance = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
     let contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
     let tx2 = await contract.getSmartContractTokenBalance();
     // tx2.wait();
@@ -253,14 +269,14 @@ console.log("bsd")
       />
 
       <div className='w-screen  grid place-items-center h-25  py-8'>
-        {account ? (
+      {account ? (
           <button onClick={sendTo} className="text-red-500 bg-red-300 px-4 py-2 rounded-lg">{`Bulk Send`}</button>
         ) : (
           <button className="text-red-500 bg-red-300 px-4 py-2 rounded-lg" onClick={() => connectWallet()}>
             {"Connect Wallet"}
           </button>
         )}
-      </div>
+        </div>
     </div>
   );
 }

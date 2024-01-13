@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
+mongoose.set('strictQuery', true);
 //Connect to MongoDB...
 connectDB();
 mongoose.connection.once("open",()=>{

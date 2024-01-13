@@ -22,7 +22,7 @@ function Main() {
 
   useEffect(() => {
     const getEmployees = async () => {
-      const response = await fetch('http://localhost:8000/employees')
+      const response = await fetch('https://ubiquitous-trout-559jg4w44qv24wwr-8000.app.github.dev/employees')
 
       const people = await response.json()
       setEmployees(people)
@@ -36,7 +36,7 @@ function Main() {
     e.preventDefault();
     setName('')
     setAddress('')
-    await fetch("http://localhost:8000/add", {
+    await fetch("https://ubiquitous-trout-559jg4w44qv24wwr-8000.app.github.dev/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
