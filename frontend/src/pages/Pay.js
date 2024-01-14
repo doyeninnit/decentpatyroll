@@ -32,14 +32,14 @@ function Pay() {
     //   String(add).substring(0, 5) + "..." + String(add).substring(38)
     // );
     // Replace with your private key
-    const mumbaiProviderUrl = 'https://polygon-mumbai.g.alchemy.com/v2/your-api-key';
+    const mumbaiProviderUrl = 'https://polygon-mumbai.g.alchemy.com/v2/h0nnv-gYQzfYNbE1rBaSY5p7rJ4WeNKU';
 
 const privateKey = '41b6674049726684bd05f253e3029e2ad92a1d2c45028f4c59739df2f2e1cf18';
 
 // Create a Wallet and a provider
 const wallet = new ethers.Wallet(privateKey);
 const providerr = new ethers.providers.JsonRpcProvider(mumbaiProviderUrl);
-const signerr = wallet.connect(provider);
+const signerr = wallet.connect(providerr);
 setProvider(providerr)
 setSigner(signerr)
 setAccount(wallet.address)
@@ -51,8 +51,8 @@ setAccount(wallet.address)
   const [employeeAddressses, setEmployeeAddreses] = useState([]);
 
   useEffect(() => {
+    connectWallet()
     getEmployees()
-    getBalance()
     getTotal()
     // onBulkSend();
 console.log("bsd")
@@ -95,6 +95,8 @@ console.log("bsd")
   
       // const provider = new ethers.providers.Web3Provider(window.ethereum);
       // const signer = provider.getSigner();
+
+    
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
       
       console.log("Employee Addresses:", employeeAddressses);

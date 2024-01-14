@@ -31,7 +31,7 @@ function History() {
         <div>
 
             <div className='flex place-content-between w-screen bg-black py-8 text-red-500'>
-                <p className='mx-4 font-normal text-2xl'>BONUS DAPP TRANSACTION HISTORY</p>
+                <p className='mx-4 font-normal text-2xl'>TRANSACTION HISTORY</p>
                 <Link to='/pay'>
                     <p className='mx-4'> back</p>
                 </Link>

@@ -17,7 +17,7 @@ function Home({ employees }) {
 
   const onDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/employees/${id}`)
+      const response = await fetch(`https://ubiquitous-trout-559jg4w44qv24wwr-8000.app.github.dev/employees/${id}`)
       console.log(response.json())
     } catch (error) {
       console.log(error)
